@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <!-- Full-bleed version for home-screen icons: the OS applies its own rounded mask. -->
+  <rect width="96" height="96" fill="#1a1d26"/>
+  <g transform="translate(22 22) scale(0.765)">
+    <rect x="0" y="0" width="20" height="20" rx="4" fill="#ffd500"/>
+    <rect x="24" y="0" width="20" height="20" rx="4" fill="#00a650"/>
+    <rect x="48" y="0" width="20" height="20" rx="4" fill="#d0021b"/>
+    <rect x="0" y="24" width="20" height="20" rx="4" fill="#0051ba"/>
+    <rect x="24" y="24" width="20" height="20" rx="4" fill="#f4f4f4"/>
+    <rect x="48" y="24" width="20" height="20" rx="4" fill="#ff6a00"/>
+    <rect x="0" y="48" width="20" height="20" rx="4" fill="#00a650"/>
+    <rect x="24" y="48" width="20" height="20" rx="4" fill="#ff6a00"/>
+    <rect x="48" y="48" width="20" height="20" rx="4" fill="#ffd500"/>
+  </g>
+</svg>

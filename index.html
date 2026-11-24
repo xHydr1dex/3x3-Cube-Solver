@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#101218" />
+  <meta name="description" content="Scan your Rubik's cube and follow an animated step-by-step solution." />
+  <!-- Home-screen app behaviour (iPhone uses the apple-* tags, Android uses the manifest) -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Cube Solver" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <title>Cube Solver</title>
+</head>
+<body>
+  <main id="app">
+    <!-- Home -->
+    <section id="home" class="screen active">
+      <div class="hero">
+        <img src="/icon.svg" alt="" class="logo" />
+        <h1>Cube Solver</h1>
+        <p class="muted">Scan your cube and follow the solution move by move.</p>
+      </div>
+      <div class="stack">
+        <button class="btn primary" id="go-scan">Scan my cube</button>
+        <button class="btn" id="go-manual">Enter colors by hand</button>
+        <button class="btn ghost" id="go-random">Try a random scramble</button>
+        <button class="btn install" id="install-btn" hidden>Install app</button>
+        <p class="install-hint muted small" id="install-ios" hidden>
+          Install on iPhone: tap
+          <svg viewBox="0 0 24 24" aria-label="Share"><path d="M12 3v12M7 8l5-5 5 5M5 12v8h14v-8"/></svg>
+          <b>Share</b>, then <b>Add to Home Screen</b>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Scan -->
+    <section id="scan" class="screen">
+      <header class="bar">
+        <button class="icon-btn" data-back aria-label="Back">‹</button>
+        <h2 id="scan-step">Scan 1 / 6</h2>
+        <span></span>
+      </header>
+      <div class="viewport">
+        <video id="video" playsinline muted autoplay></video>
+        <div class="guide" id="guide"></div>
+      </div>
+      <div class="scan-text">
+        <h3 id="scan-title"></h3>
+        <p id="scan-hold" class="muted"></p>
+        <p id="scan-error" class="msg"></p>
+      </div>
+      <div class="progress" id="scan-progress"></div>
+      <div class="row">
+        <button class="btn" id="scan-undo">Redo last</button>
+        <button class="btn primary" id="scan-capture">Capture</button>
+      </div>
+    </section>
+
+    <!-- Review -->
+    <section id="review" class="screen">
+      <header class="bar">
+        <button class="icon-btn" data-back aria-label="Back">‹</button>
+        <h2>Check colors</h2>
+        <span></span>
+      </header>
+      <p class="muted center-text">Pick a color, then tap any sticker that looks wrong.</p>
+      <div class="net" id="net"></div>
+      <div class="palette" id="palette"></div>
+      <p class="msg center-text" id="review-msg"></p>
+      <div class="row">
+        <button class="btn primary" id="review-solve">Solve</button>
+      </div>
+    </section>
+
+    <!-- Solve -->
+    <section id="solve" class="screen">
+      <header class="bar">
+        <button class="icon-btn" data-back aria-label="Back">‹</button>
+        <div class="seg" role="tablist">
+          <button data-method="shortest" class="on">Shortest</button>
+          <button data-method="beginner">Beginner</button>
+        </div>
+        <span></span>
+      </header>
+      <div class="view3d" id="view3d">
+        <div class="tip" id="hold-tip"></div>
+        <div class="loading" id="solve-loading">Working out the solution…</div>
+      </div>
+      <div class="panel">
+        <div class="stage-line">
+          <span id="stage-name"></span>
+          <span id="step-count" class="muted"></span>
+        </div>
+        <p id="stage-hint" class="muted small"></p>
+        <div class="algo" id="algo" hidden>
+          <div class="algo-head"><span class="algo-label">Algorithm</span><code id="algo-moves"></code></div>
+          <div class="algo-does small" id="algo-does"></div>
+        </div>
+        <div class="now" id="now">
+          <div class="now-move" id="now-move"></div>
+          <div class="now-desc" id="now-desc"></div>
+        </div>
+        <div class="strip" id="strip"></div>
+        <div class="controls">
+          <button class="icon-btn" id="ctl-restart" aria-label="Restart">
+            <svg viewBox="0 0 24 24"><path d="M6 5v14M19 5l-9 7 9 7z"/></svg>
+          </button>
+          <button class="icon-btn" id="ctl-prev" aria-label="Previous move">
+            <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <button class="icon-btn big" id="ctl-play" aria-label="Play">
+            <svg viewBox="0 0 24 24" class="i-play"><path d="M8 5l11 7-11 7z"/></svg>
+            <svg viewBox="0 0 24 24" class="i-pause"><path d="M8 5v14M16 5v14"/></svg>
+          </button>
+          <button class="icon-btn" id="ctl-next" aria-label="Next move">
+            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+          <label class="speed" title="Speed">
+            <svg viewBox="0 0 24 24"><path d="M13 3L5 14h6l-1 7 8-11h-6z"/></svg>
+            <input type="range" id="ctl-speed" min="0" max="100" value="55" aria-label="Speed" />
+          </label>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
